@@ -16,7 +16,7 @@ def main(config: str = "config.json") -> None:
     config = Config(**json.loads(open(config_path, "r", encoding='utf-8').read()))
     logger.success("Loaded config from {config_path}", config_path=config_path)
     client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
-                    phone_number=config.phone_number)
+                    phone_number=config.phone_number, device_model="Python", system_version="suvvyai/telegram-user-bot 0.1")
 
     add_handlers(client)
     logger.success("Starting bot...")
