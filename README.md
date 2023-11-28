@@ -6,7 +6,7 @@ The `telegram-user-bot` is an integration tool designed for Suvvy AI. This proje
 ## Installation
 Clone the repository and install the dependencies:
 ```shell
-pipx install git+https://github.com/barabum0/wgdomain
+pipx install git+https://github.com/suvvyai/telegram-user-bot
 suvvyuser --help
 ```
 
