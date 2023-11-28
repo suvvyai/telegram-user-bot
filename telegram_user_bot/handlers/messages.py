@@ -12,6 +12,8 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
                 text=message.text
                 )
 
+    await client.read_chat_history(message.chat.id)
+
     await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
     suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
     response = await suvvy.predict(
