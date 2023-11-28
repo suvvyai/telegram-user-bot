@@ -13,7 +13,7 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
                 )
 
     await client.send_chat_action(message.chat.id, enums.ChatAction.TYPING)
-    suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key)
+    suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
     response = await suvvy.predict(
         message=SuvvyMessage(text=message.text),
         unique_id=f"suvvyai/telegram-user-bot {message.from_user.id}"
