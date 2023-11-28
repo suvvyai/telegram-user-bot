@@ -11,6 +11,7 @@ suvvyapi = "^0.1a7"
 pyrogram = "^2.0.106"
 tgcrypto = "^1.2.5"
 pydantic = "^2.5.2"
+loguru = "^0.7.2"
 
 
 [build-system]
