@@ -27,7 +27,11 @@ nano config.json
   "api_id": 0,
   "api_hash": "",
   "phone_number": "",
-  "suvvy_api_key": ""
+  "suvvy_api_key": "",
+  "timeouts": {
+    "before_read_seconds": 0,
+    "before_answer_seconds": 0
+  }
 }
 ```
 - **api_id** and **api_hash** can be obtained from https://my.telegram.org/apps
