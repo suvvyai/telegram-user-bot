@@ -1,12 +1,15 @@
 import asyncio
 import json
 
+from pyrogram_patch import patch
+
 from pyrogram import Client
 from loguru import logger
 import click
 
 from telegram_user_bot.config import Config
 from telegram_user_bot.handlers import add_handlers
+from telegram_user_bot.middlewares.value import ParamValueMiddleware
 
 
 @click.command()
@@ -17,6 +20,9 @@ def main(config: str = "config.json") -> None:
     logger.success("Loaded config from {config_path}", config_path=config_path)
     client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
                     phone_number=config.phone_number, device_model="Python", system_version="suvvyai/telegram-user-bot 0.1")
+
+    patch_manager = patch(client)
+    patch_manager.include_middleware(ParamValueMiddleware(key="config", value=config))
 
     add_handlers(client)
     logger.success("Starting bot...")
