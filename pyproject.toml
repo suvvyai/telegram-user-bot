@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "telegram-user-bot"
+name = "suvvyuser"
 version = "0.1"
 description = "Telegram user bot integration for Suvvy AI"
 authors = ["sushka <barabum@duck.com>"]
