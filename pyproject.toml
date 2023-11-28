@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "telegram-user-bot"
-version = "0.1"
+version = "0.2"
 description = "Telegram user bot integration for Suvvy AI"
 authors = ["sushka <barabum@duck.com>"]
 readme = "README.md"
