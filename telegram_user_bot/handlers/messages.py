@@ -17,7 +17,7 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
     await asyncio.sleep(config.timeouts.before_read_seconds)
     await client.read_chat_history(message.chat.id)
     await asyncio.sleep(config.timeouts.before_answer_seconds)
-    async with message.reply_chat_action(enums.ChatAction.TYPING):
+    async with client.send_chat_action(message.chat.id, enums.ChatAction.TYPING):
         suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
         response = await suvvy.predict(
             message=SuvvyMessage(text=message.text),
