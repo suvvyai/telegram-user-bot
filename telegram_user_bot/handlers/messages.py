@@ -33,13 +33,15 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
         await message.reply(response.actual_response.text)
 
         send_message_log(
-            f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name else ''}",
-            message.from_user.username,
-            response.actual_response.text
+            full_name=f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
+            text=message.text,
+            username=message.from_user.username,
+            answer=response.actual_response.text
         )
     except HistoryStoppedError:
         send_message_log(
-            f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name else ''}",
-            message.from_user.username,
-            "Dialog was intercepted"
+            full_name=f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
+            text=message.text,
+            username=message.from_user.username,
+            answer="Dialog is intercepted (202)"
         )

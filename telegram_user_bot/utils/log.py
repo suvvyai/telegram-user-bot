@@ -21,7 +21,7 @@ def configure_logger():
 
 def send_message_log(full_name: str, text: str, answer: str, username: str = None):
     text = f"""New message:
-    👤 {full_name} {f"(@{username})" if username else None}
+    👤 {full_name} {f"(@{username})" if username else ""}
     🕓 At {datetime.datetime.now()}
     💬 Text:
 {text}
