@@ -30,6 +30,7 @@ Alternatively, you can use Docker Compose:
        volumes:
          - ./config.json:/usr/src/app/config.json
          - ./client.session:/usr/src/app/client.session  # It must be the same as "session_name" in config with .session
+         - ./logs/:/usr/src/app/logs/
    ```
    
 4. Run the following command:

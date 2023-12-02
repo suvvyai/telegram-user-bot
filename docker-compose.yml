@@ -6,3 +6,4 @@ services:
     volumes:
       - ./config.json:/usr/src/app/config.json
       - ./client.session:/usr/src/app/client.session
+      - ./logs/:/usr/src/app/logs/
