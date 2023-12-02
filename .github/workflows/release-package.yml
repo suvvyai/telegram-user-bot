@@ -1,0 +1,41 @@
+name: Build and Publish Docker Image
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      image: ${{ steps.build-image.outputs.IMAGE_NAME }}
+    steps:
+      - name: Check Out Repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        id: build-image
+        run: |
+          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }}
+          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
+          docker build -t $IMAGE_NAME .
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Publish Docker Image to GHCR
+        run: |
+          docker push ${{ needs.build.outputs.image }}
