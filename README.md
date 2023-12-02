@@ -3,45 +3,39 @@
 [![Packaged with Poetry](https://img.shields.io/badge/packaging-poetry-cyan)](https://python-poetry.org/)
 [![Uses Python 3.11](https://img.shields.io/badge/python-3.11-blue?logo=python&logoColor=white)](https://www.python.org/)
 
-
 ## About
-The `telegram-user-bot` is an integration tool designed for Suvvy AI. This project allows seamless interaction between Telegram and Suvvy AI via user bot, providing an efficient and user-friendly platform for communication.
+The `telegram-user-bot` is a versatile and user-friendly integration tool designed for Suvvy AI, enabling seamless interaction between Telegram and Suvvy AI. It stands out for its ease of use, customizability, and the ability to streamline communication workflows efficiently.
+
+## Prerequisites
+Before you begin, ensure you have the following installed:
+- Docker
+- Docker Compose
+- Basic understanding of Telegram bots and Docker Compose
 
 ## Installation using Docker Compose
-Alternatively, you can use Docker Compose:
-1. [Create a config](#configuration) and pass a Suvvy AI API key into it.
+Use Docker Compose for a quick and straightforward setup:
 
-   *(it is not required to change something else in default config besides suvvy_api_key)*
+1. **Create a Config File**: 
+   Refer to the [Configuration](#configuration) section to create a `config.json` file with a Suvvy AI API key.
 
-   *(config file should be named **config.json** and be in the same folder as your docker compose file.)*
+2. **Create a Pyrogram Session**: 
+   Use [barabum0/pyroauth](https://github.com/barabum0/pyroauth) to create a session file named `client.session`.
 
+3. **Download `docker-compose.yml` File**: 
+   - With wget:
+     ```shell
+     wget https://github.com/suvvyai/telegram-user-bot/blob/main/docker-compose.yml
+     ```
+   - Manually:
+     [docker-compose.yml](docker-compose.yml)
 
-2. Create a pyrogram session using [barabum0/pyroauth](https://github.com/barabum0/pyroauth)
-
-   *(session file should be named **client.session** and be in the same folder as your docker compose file.)*
-
-
-3. Download a `docker-compose.yml` file:
-
-   #### With wget:
-   ```shell
-   wget https://github.com/suvvyai/telegram-user-bot/blob/main/docker-compose.yml
-   ```
-   
-   #### Manually:
-   [docker-compose.yml](docker-compose.yml)
-
-   
-4. Run the following command:
+4. **Start the Service**:
    ```shell
    docker-compose up -d  # or docker compose up -d
    ```
 
-## Usage
-The bot can be used directly through the running Docker container. Make sure to mount your `config.json` when starting the container.
-
 ## Configuration
-Create a `config.json` file in your project directory:
+Create and customize your `config.json`:
 ```shell
 wget https://github.com/suvvyai/telegram-user-bot/blob/main/config.example.json -O config.json
 nano config.json
@@ -49,20 +43,26 @@ nano config.json
 ```json
 {
   "session_name": "client",
-  "suvvy_api_key": "",
+  "suvvy_api_key": "<Your Suvvy AI API Key>",
   "timeouts": {
     "before_read_seconds": 0,
     "before_answer_seconds": 0
   }
 }
 ```
-- **suvvy_api_key** can be obtained from https://home.suvvy.ai
+- **suvvy_api_key**: Obtain this from [Suvvy AI](https://home.suvvy.ai).
 
 ## Contributing
-Contributions are welcome! Feel free to fork the repository and submit pull requests.
+We welcome contributions! Here's how you can help:
+- **Fork the Repository**: Make your changes in a fork.
+- **Follow the Coding Standards**: Ensure your code adheres to the standards used throughout the existing codebase.
+- **Submit a Pull Request**: We'll review your changes and merge them if they enhance the project.
+
+## Troubleshooting
+If you encounter issues, open an issue in the GitHub repository.
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contact
-For any queries or suggestions, please open an issue in the GitHub repository.
+For queries or suggestions, feel free to open an issue in the [GitHub repository](https://github.com/suvvyai/telegram-user-bot/issues).
