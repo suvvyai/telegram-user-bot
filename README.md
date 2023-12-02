@@ -3,16 +3,21 @@
 ## About
 The `telegram-user-bot` is an integration tool designed for Suvvy AI. This project allows seamless interaction between Telegram and Suvvy AI via user bot, providing an efficient and user-friendly platform for communication.
 
-## Installation using Docker
-Pull the Docker image and run the container:
-```shell
-docker pull ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
-docker run -d -v $(pwd)/config.json:/usr/src/app/config.json ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
-```
-
 ## Installation using Docker Compose
 Alternatively, you can use Docker Compose:
-1. Create a `docker-compose.yml` file with the following content:
+1. [Create a config](#configuration) and pass a Suvvy AI API key into it.
+
+   *(it is not required to change something else in default config besides suvvy_api_key)*
+
+   *(config file should be named **config.json** and be in the same folder as your docker compose file.)*
+
+
+2. Create a pyrogram session using [barabum0/pyroauth](https://github.com/barabum0/pyroauth)
+
+   *(session file should be named **client.session** and be in the same folder as your docker compose file.)*
+
+
+3. Create a `docker-compose.yml` file with the following content:
    ```yaml
    version: '3.8'
    services:
@@ -20,11 +25,12 @@ Alternatively, you can use Docker Compose:
        image: ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
        volumes:
          - ./config.json:/usr/src/app/config.json
-         - ./client.session:/usr/src/app/client.session
+         - ./client.session:/usr/src/app/client.session  # It must be the same as "session_name" in config with .session
    ```
-2. Run the following command:
+   
+4. Run the following command:
    ```shell
-   docker-compose up -d
+   docker-compose up -d  # or docker compose up -d
    ```
 
 ## Usage
@@ -38,9 +44,7 @@ nano config.json
 ```
 ```json
 {
-  "api_id": 0,
-  "api_hash": "",
-  "phone_number": "",
+  "session_name": "client",
   "suvvy_api_key": "",
   "timeouts": {
     "before_read_seconds": 0,
