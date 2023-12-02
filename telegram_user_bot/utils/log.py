@@ -1,3 +1,4 @@
+import datetime
 import sys
 
 from loguru import logger
@@ -16,3 +17,15 @@ def configure_logger():
     logger.level("WARNING", color="<yellow>")
     logger.level("ERROR", color="<red>")
     logger.level("CRITICAL", color="<bold><white><RED>")
+
+
+def send_message_log(full_name: str, text: str, answer: str, username: str = None):
+    text = f"""New message:
+    👤 {full_name} {f"(@{username})" if username else None}
+    🕓 At {datetime.datetime.now()}
+    💬 Text:
+{text}
+    🤖 Answer:
+{answer}
+    """
+    logger.info(text)
