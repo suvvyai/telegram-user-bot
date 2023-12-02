@@ -22,7 +22,7 @@ def main(config: str = "config.json") -> None:
     if config.phone_code is None:
         client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
                         phone_number=config.phone_number, device_model="Python", system_version="suvvyai/telegram-user-bot 0.1")
-        client.authorize()
+        client.run()
         exit()
     else:
         client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
