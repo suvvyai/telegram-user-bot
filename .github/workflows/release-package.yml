@@ -10,17 +10,17 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-      image: ${{ steps.build-image.outputs.IMAGE_NAME }}
+      image_name: ${{ steps.set-image-name.outputs.image_name }}
     steps:
       - name: Check Out Repository
         uses: actions/checkout@v2
 
+      - name: Set Image Name
+        id: set-image-name
+        run: echo "::set-output name=image_name::ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }}"
+
       - name: Build Docker Image
-        id: build-image
-        run: |
-          IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }}
-          echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
-          docker build -t $IMAGE_NAME .
+        run: docker build -t ${{ steps.set-image-name.outputs.image_name }} .
 
   publish:
     needs: build
@@ -37,5 +37,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish Docker Image to GHCR
-        run: |
-          docker push ${{ needs.build.outputs.image }}
+        run: docker push ${{ needs.build.outputs.image_name }}
