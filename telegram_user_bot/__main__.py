@@ -10,11 +10,13 @@ import click
 from telegram_user_bot.config import Config
 from telegram_user_bot.handlers import add_handlers
 from telegram_user_bot.middlewares.value import ParamValueMiddleware
+from telegram_user_bot.utils.log import configure_logger
 
 
 @click.command()
 @click.option("--config", "-c", type=click.Path(exists=True, dir_okay=False, readable=True), default="config.json")
 def main(config: str = "config.json") -> None:
+    configure_logger()
     config_path = config
     config = Config(**json.loads(open(config_path, "r", encoding='utf-8').read()))
     logger.success("Loaded config from {config_path}", config_path=config_path)
