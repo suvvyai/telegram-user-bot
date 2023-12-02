@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  user_bot:
+    build: .
+    volumes:
+      - config.json:/usr/src/app/config.json
