@@ -52,7 +52,6 @@ nano config.json
   }
 }
 ```
-- **api_id** and **api_hash** can be obtained from https://my.telegram.org/apps
 - **suvvy_api_key** can be obtained from https://home.suvvy.ai
 
 ## Contributing
