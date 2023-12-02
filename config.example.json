@@ -1,8 +1,5 @@
 {
-  "api_id": 0,
-  "api_hash": "",
-  "phone_number": "",
-  "phone_code": null,
+  "session_name": "client",
   "suvvy_api_key": "",
   "timeouts": {
     "before_read_seconds": 0,
