@@ -21,17 +21,16 @@ Alternatively, you can use Docker Compose:
    *(session file should be named **client.session** and be in the same folder as your docker compose file.)*
 
 
-3. Create a `docker-compose.yml` file with the following content:
-   ```yaml
-   version: '3.8'
-   services:
-     telegram_user_bot:
-       image: ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
-       volumes:
-         - ./config.json:/usr/src/app/config.json
-         - ./client.session:/usr/src/app/client.session  # It must be the same as "session_name" in config with .session
-         - ./logs/:/usr/src/app/logs/
+3. Download a `docker-compose.yml` file:
+
+   #### With wget:
+   ```shell
+   wget https://github.com/suvvyai/telegram-user-bot/blob/main/docker-compose.yml
    ```
+   
+   #### Manually:
+   [docker-compose.yml](docker-compose.yml)
+
    
 4. Run the following command:
    ```shell
