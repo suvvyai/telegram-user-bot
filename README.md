@@ -20,6 +20,7 @@ Alternatively, you can use Docker Compose:
        image: ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
        volumes:
          - ./config.json:/usr/src/app/config.json
+         - ./client.session:/usr/src/app/client.session
    ```
 2. Run the following command:
    ```shell
