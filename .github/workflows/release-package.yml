@@ -23,7 +23,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }} .
-          docker push ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }}
+      - name: Build Docker Image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:latest -t ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }} .
+
+      - name: Push Docker Image (Latest Tag)
+        run: docker push ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:latest
+
+      - name: Push Docker Image (SHA Tag)
+        run: docker push ghcr.io/${{ github.repository_owner }}/telegram_suvvy_user_bot:${{ github.sha }}
