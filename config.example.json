@@ -2,6 +2,7 @@
   "api_id": 0,
   "api_hash": "",
   "phone_number": "",
+  "phone_code": null,
   "suvvy_api_key": "",
   "timeouts": {
     "before_read_seconds": 0,

@@ -18,8 +18,15 @@ def main(config: str = "config.json") -> None:
     config_path = config
     config = Config(**json.loads(open(config_path, "r", encoding='utf-8').read()))
     logger.success("Loaded config from {config_path}", config_path=config_path)
-    client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
-                    phone_number=config.phone_number, device_model="Python", system_version="suvvyai/telegram-user-bot 0.1")
+
+    if config.phone_code is None:
+        client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
+                        phone_number=config.phone_number, device_model="Python", system_version="suvvyai/telegram-user-bot 0.1")
+        exit(1)
+    else:
+        client = Client(name=f"{config.phone_number.strip('+ ')}", api_id=config.api_id, api_hash=config.api_hash,
+                        phone_number=config.phone_number, device_model="Python",
+                        system_version="suvvyai/telegram-user-bot 0.1", phone_code=str(config.phone_code))
 
     patch_manager = patch(client)
     patch_manager.include_middleware(ParamValueMiddleware(key="config", value=config))
