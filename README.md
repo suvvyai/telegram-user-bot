@@ -24,7 +24,7 @@ Use Docker Compose for a quick and straightforward setup:
 3. **Download `docker-compose.yml` File**: 
    - With wget:
      ```shell
-     wget https://github.com/suvvyai/telegram-user-bot/blob/main/docker-compose.yml
+     wget https://raw.githubusercontent.com/suvvyai/telegram-user-bot/main/docker-compose.yml
      ```
    - Manually:
      [docker-compose.yml](docker-compose.yml)
