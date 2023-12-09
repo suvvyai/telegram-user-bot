@@ -28,22 +28,24 @@ Use Docker Compose for a quick and straightforward setup:
 2. Create a Pyrogram Session: Use [barabum0/pyroauth](https://github.com/barabum0/pyroauth) to create a session file named `client.session`.
 3. Download `docker-compose.yml` File:
    - With wget:
-     ```
+     ```bash
      wget https://raw.githubusercontent.com/suvvyai/telegram-user-bot/main/docker-compose.yml
      ```
    - Manually: [docker-compose.yml](https://github.com/suvvyai/telegram-user-bot/blob/main/docker-compose.yml)
 4. Start the Service:
-   ```
+   ```bash
    docker-compose up -d  # or docker compose up -d
    ```
 
 ## Configuration
 
 Create and customize your `config.json`:
-```
+```bash
 wget https://github.com/suvvyai/telegram-user-bot/blob/main/config.example.json -O config.json
 nano config.json
+```
 
+```json
 {
   "session_name": "client",
   "suvvy_api_key": "<Your Suvvy AI API Key>",
