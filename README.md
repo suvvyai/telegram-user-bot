@@ -24,7 +24,7 @@ Before you begin, ensure you have the following installed:
 
 Use Docker Compose for a quick and straightforward setup:
 
-1. Create a Config File: Refer to the Configuration section to create a `config.json` file with a Suvvy AI API key.
+1. Create a Dotenv File: Refer to the Configuration section to create a `.env` file with a Suvvy AI API key.
 2. Create a Pyrogram Session: Use [barabum0/pyroauth](https://github.com/barabum0/pyroauth) to create a session file named `client.session`.
 3. Download `docker-compose.yml` File:
    - With wget:
@@ -39,21 +39,17 @@ Use Docker Compose for a quick and straightforward setup:
 
 ## Configuration
 
-Create and customize your `config.json`:
+Create and customize your `.env`:
 ```bash
-wget https://github.com/suvvyai/telegram-user-bot/blob/main/config.example.json -O config.json
-nano config.json
+wget https://github.com/suvvyai/telegram-user-bot/blob/main/.env.example -O .env
+nano .env
 ```
 
-```json
-{
-  "session_name": "client",
-  "suvvy_api_key": "<Your Suvvy AI API Key>",
-  "timeouts": {
-    "before_read_seconds": 0,
-    "before_answer_seconds": 0
-  }
-}
+```shell
+SESSION_NAME=client
+SUVVY_API_KEY=<Your Suvvy AI API key goes here>
+TIMEOUTS__BEFORE_READ_SECONDS=0
+TIMEOUTS__BEFORE_ANSWER_SECONDS=0
 ```
 
 ## Troubleshooting
