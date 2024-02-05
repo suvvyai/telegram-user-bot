@@ -6,11 +6,11 @@ from pyrogram.types import Message
 from suvvyapi import Message as SuvvyMessage, AsyncSuvvyAPIWrapper
 from suvvyapi.exceptions.api import HistoryStoppedError
 
-from telegram_user_bot.config import Config
+from telegram_user_bot.config import config
 from telegram_user_bot.utils.status import keep_typing
 
 
-async def on_message(client: Client, message: Message, config: Config) -> None:
+async def on_message(client: Client, message: Message) -> None:
     logger.info("Message received from {user}",
                 user=f"{message.from_user.first_name}"
                      f"{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}")
