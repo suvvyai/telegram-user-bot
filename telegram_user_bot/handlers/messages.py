@@ -1,47 +1,47 @@
 import asyncio
 
 from loguru import logger
-from pyrogram import Client, enums
+from pyrogram import Client
 from pyrogram.types import Message
 from suvvyapi import Message as SuvvyMessage, AsyncSuvvyAPIWrapper
 from suvvyapi.exceptions.api import HistoryStoppedError
 
 from telegram_user_bot.config import Config
-from telegram_user_bot.utils.log import send_message_log
 from telegram_user_bot.utils.status import keep_typing
 
 
 async def on_message(client: Client, message: Message, config: Config) -> None:
-    await asyncio.sleep(config.timeouts.before_read_seconds)
-    await client.read_chat_history(message.chat.id)
-    await asyncio.sleep(config.timeouts.before_answer_seconds)
+    logger.info("Message received from {user}",
+                user=f"{message.from_user.first_name}"
+                     f"{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}")
+    logger.info("Message received: {text}", text=message.text)
 
     typing_event = asyncio.Event()
 
-    asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
-
-    suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
-
     try:
+        asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
+        suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
+
+        logger.debug("Sending received message to Suvvy AI...")
         response = await suvvy.predict(
             message=SuvvyMessage(text=message.text),
             unique_id=f"suvvyai/telegram-user-bot {message.from_user.id}",
             raise_if_dialog_stopped=True
         )
+        logger.success("Suvvy AI answered: {text}", text=response.actual_response.text)
 
-        typing_event.set()
+        logger.info("Waiting for {before_read} + {before_answer} seconds before replying",
+                    before_read=config.timeouts.before_read_seconds,
+                    before_answer=config.timeouts.before_answer_seconds)
+        await asyncio.sleep(config.timeouts.before_read_seconds)
+        await client.read_chat_history(message.chat.id)
+        await asyncio.sleep(config.timeouts.before_answer_seconds)
+
+        logger.success("Replying!")
         await message.reply(response.actual_response.text)
-
-        send_message_log(
-            full_name=f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
-            text=message.text,
-            username=message.from_user.username,
-            answer=response.actual_response.text
-        )
     except HistoryStoppedError:
-        send_message_log(
-            full_name=f"{message.from_user.first_name}{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
-            text=message.text,
-            username=message.from_user.username,
-            answer="Dialog is intercepted (202)"
-        )
+        logger.warning("Suvvy AI refused to answer")
+    except Exception as e:
+        logger.error("Suvvy AI raised an error: {e}", e=e)
+    finally:
+        typing_event.set()
