@@ -33,15 +33,23 @@ async def on_message(client: Client, message: Message) -> None:
         logger.success("Suvvy AI answered: {text}", text=response.actual_response.text)
 
         logger.info(
-            "Waiting for {before_read} + {before_answer} seconds before replying",
+            "Waiting for {before_read} seconds before reading",
             before_read=config.timeouts.before_read_seconds,
-            before_answer=config.timeouts.before_answer_seconds,
         )
         await asyncio.sleep(config.timeouts.before_read_seconds)
         await client.read_chat_history(message.chat.id)
-        await asyncio.sleep(config.timeouts.before_typing_seconds)
 
+        logger.info(
+            "Waiting for {before_type} seconds before typing",
+            before_type=config.timeouts.before_typing_seconds,
+        )
+        await asyncio.sleep(config.timeouts.before_typing_seconds)
         asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
+
+        logger.info(
+            "Waiting for {before_answer} seconds before replying",
+            before_answer=config.timeouts.before_answer_seconds,
+        )
 
         await asyncio.sleep(config.timeouts.before_answer_seconds)
         logger.success("Replying!")
