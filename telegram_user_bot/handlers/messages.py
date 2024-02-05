@@ -19,7 +19,6 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
     typing_event = asyncio.Event()
 
     try:
-        asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
         suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
 
         logger.debug("Sending received message to Suvvy AI...")
@@ -36,6 +35,8 @@ async def on_message(client: Client, message: Message, config: Config) -> None:
         await asyncio.sleep(config.timeouts.before_read_seconds)
         await client.read_chat_history(message.chat.id)
         await asyncio.sleep(config.timeouts.before_answer_seconds)
+
+        asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
 
         logger.success("Replying!")
         await message.reply(response.actual_response.text)
