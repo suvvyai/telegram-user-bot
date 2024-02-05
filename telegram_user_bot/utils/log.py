@@ -4,7 +4,7 @@ import sys
 from loguru import logger
 
 
-def configure_logger():
+def configure_logger() -> None:
     log_format = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
 
     logger.remove()
@@ -19,7 +19,7 @@ def configure_logger():
     logger.level("CRITICAL", color="<bold><white><RED>")
 
 
-def send_message_log(full_name: str, text: str, answer: str, username: str = None):
+def send_message_log(full_name: str, text: str, answer: str, username: str | None = None) -> None:
     text = f"""New message:
     👤 {full_name} {f"(@{username})" if username else ""}
     🕓 At {datetime.datetime.now()}
