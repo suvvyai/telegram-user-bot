@@ -4,7 +4,8 @@ services:
   telegram_user_bot:
     image: ghcr.io/suvvyai/telegram_suvvy_user_bot:latest
     volumes:
-      - ./config.json:/usr/src/app/config.json
       - ./client.session:/usr/src/app/client.session  # It must be the same as "session_name" in config with .session
       - ./logs/:/usr/src/app/logs/
     restart: unless-stopped
+    env_file:
+      - ".env"
