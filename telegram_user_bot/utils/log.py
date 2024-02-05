@@ -5,11 +5,10 @@ from loguru import logger
 
 
 def configure_logger() -> None:
-    log_format = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level>"
+    log_format = "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> - <level>{message}</level> {exception}"
 
     logger.remove()
-    logger.add(sys.stdout, colorize=True, format=log_format, diagnose=True, backtrace=False)
-    logger.add(sys.stderr, backtrace=False, colorize=True, diagnose=True)
+    logger.add(sys.stdout, colorize=True, format=log_format, diagnose=True, backtrace=True)
     logger.add("logs/log.log", rotation="1 week", diagnose=True, enqueue=True, colorize=True, backtrace=True)
     logger.level("DEBUG", color="<fg #7f7f7f>")
     logger.level("INFO", color="<white>")
