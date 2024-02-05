@@ -23,6 +23,21 @@ mypy = "^1.8.0"
 isort = "^5.13.2"
 pre-commit = "^3.6.0"
 
+[tool.black]
+line-length = 120
+target-version = ['py311']
+
+[tool.isort]
+profile = "black"
+src_paths = ["."]
+
+[tool.mypy]
+python_version = "3.11"
+disallow_untyped_defs = true
+ignore_missing_imports = true
+disable_error_code = "attr-defined"
+plugins = "pydantic.mypy"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
