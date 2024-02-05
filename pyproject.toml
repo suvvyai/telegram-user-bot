@@ -21,6 +21,7 @@ suvvyuser = "telegram_user_bot.__main__:main"
 black = "^24.1.1"
 mypy = "^1.8.0"
 isort = "^5.13.2"
+pre-commit = "^3.6.0"
 
 [build-system]
 requires = ["poetry-core"]
