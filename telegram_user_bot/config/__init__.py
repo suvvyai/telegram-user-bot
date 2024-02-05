@@ -5,6 +5,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class TimeoutsConfig(BaseModel):
     before_read_seconds: int = Field(ge=0, default=0)  # TIMEOUTS__BEFORE_READ_SECONDS
     before_answer_seconds: int = Field(ge=0, default=0)  # TIMEOUTS__BEFORE_ANSWER_SECONDS
+    before_typing_seconds: int = Field(ge=0, default=0)  # TIMEOUTS__BEFORE_TYPING__SECONDS
 
 
 class Config(BaseSettings):

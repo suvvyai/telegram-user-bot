@@ -39,10 +39,11 @@ async def on_message(client: Client, message: Message) -> None:
         )
         await asyncio.sleep(config.timeouts.before_read_seconds)
         await client.read_chat_history(message.chat.id)
-        await asyncio.sleep(config.timeouts.before_answer_seconds)
+        await asyncio.sleep(config.timeouts.before_typing_seconds)
 
         asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
 
+        await asyncio.sleep(config.timeouts.before_answer_seconds)
         logger.success("Replying!")
         await message.reply(response.actual_response.text)
     except HistoryStoppedError:
