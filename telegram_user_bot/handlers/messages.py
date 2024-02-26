@@ -7,6 +7,7 @@ from pyrogram.types import Message
 from suvvyapi import Message as SuvvyMessage
 from suvvyapi import Suvvy
 from suvvyapi.exceptions.api import HistoryStoppedError
+from suvvyapi.models.enums import ContentType
 
 from telegram_user_bot.config import config
 from telegram_user_bot.utils.status import keep_typing
@@ -63,7 +64,7 @@ async def on_message(client: Client, message: Message) -> None:
             await fake_type_task
 
         for m in new_messages:
-            if not m.is_visible():
+            if m.message_data.data_type is not ContentType.TEXT:
                 continue
             logger.success("Replying with {m}", m=m)
             await message.reply(m.message_data.content)
