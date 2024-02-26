@@ -42,6 +42,8 @@ async def on_message(client: Client, message: Message) -> None:
 
         await asyncio.sleep(config.timeouts.before_answer_seconds)
 
+        logger.info("Replying!")
+
     typing_event = asyncio.Event()
 
     try:
