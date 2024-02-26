@@ -32,7 +32,7 @@ async def on_message(client: Client, message: Message) -> None:
             before_type=config.timeouts.before_typing_seconds,
         )
         await asyncio.sleep(config.timeouts.before_typing_seconds)
-        asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
+        await asyncio.create_task(keep_typing(client, message.chat.id, typing_event))
 
         logger.info(
             "Waiting for {before_answer} seconds before replying",
