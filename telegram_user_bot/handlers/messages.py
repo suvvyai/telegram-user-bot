@@ -60,10 +60,10 @@ async def on_message(client: Client, message: Message) -> None:
         if not fake_type_task.done():
             await fake_type_task
 
-        logger.success("Replying!")
         for m in new_messages:
             if not m.is_visible():
                 continue
+            logger.success("Replying with {m}", m=m)
             await message.reply(m.message_data.content)
     except HistoryStoppedError:
         logger.warning("Suvvy AI refused to answer")
