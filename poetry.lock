@@ -671,13 +671,13 @@ files = [
 
 [[package]]
 name = "suvvyapi"
-version = "2.0a2"
+version = "2.0a3"
 description = "A Python API wrapper for Suvvy AI API"
 optional = false
 python-versions = ">=3.10"
 files = [
-    {file = "suvvyapi-2.0a2-py3-none-any.whl", hash = "sha256:faa05f328ff2467763785c43a7cf061b101ce1dbb9d4d7a1edea8a1767bf4f14"},
-    {file = "suvvyapi-2.0a2.tar.gz", hash = "sha256:b7d2613ff660c474a174e8897bb4955dcbb4683255930e7fce2e11b8f3d4a9bb"},
+    {file = "suvvyapi-2.0a3-py3-none-any.whl", hash = "sha256:603a456743d8f568b4dffc62f5090b97bd968c33dcf325639e3d12d2931b3ac3"},
+    {file = "suvvyapi-2.0a3.tar.gz", hash = "sha256:42b112d2892c17cf1772c298bc4f67f8740d901a51131a521699551b17a81b81"},
 ]
 
 [package.dependencies]
@@ -798,4 +798,4 @@ dev = ["black (>=19.3b0)", "pytest (>=4.6.2)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "454bd120826cbd8a2e7925bee313360236f09d8b12aef7f7e287ee07a94d1655"
+content-hash = "249f8fa51c99e67128a7e471d064aefbb2018b4f290785629daa54ee023e4004"
