@@ -53,7 +53,7 @@ async def on_message(client: Client, message: Message) -> None:
         logger.debug("Sending received message to Suvvy AI...")
         new_messages, _ = await suvvy.apredict_history_add_message(
             message=message.text,
-            unique_id=quote(f"suvvyai-telegram-user-bot {message.from_user.id}", safe=""),
+            unique_id=f"suvvyai-telegram-user-bot {message.from_user.id}",
         )
         logger.success("Suvvy AI answered: {new_messages}", new_messages=new_messages)
 
