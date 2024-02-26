@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-suvvyapi = "^0.1a7"
+suvvyapi = "2.0a1"
 pyrogram = "^2.0.106"
 tgcrypto = "^1.2.5"
 pydantic = "^2.5.2"
