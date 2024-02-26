@@ -7,12 +7,12 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-suvvyapi = "2.0a1"
 pyrogram = "^2.0.106"
 tgcrypto = "^1.2.5"
 pydantic = "^2.5.2"
 loguru = "^0.7.2"
 pydantic-settings = "^2.1.0"
+suvvyapi = "2.0a2"
 
 [tool.poetry.scripts]
 suvvyuser = "telegram_user_bot.__main__:main"
