@@ -3,8 +3,8 @@ import asyncio
 from loguru import logger
 from pyrogram import Client
 from pyrogram.types import Message
-from suvvyapi import AsyncSuvvyAPIWrapper
 from suvvyapi import Message as SuvvyMessage
+from suvvyapi import Suvvy
 from suvvyapi.exceptions.api import HistoryStoppedError
 
 from telegram_user_bot.config import config
@@ -44,24 +44,24 @@ async def on_message(client: Client, message: Message) -> None:
     typing_event = asyncio.Event()
 
     try:
-        suvvy = AsyncSuvvyAPIWrapper(config.suvvy_api_key, check_connection=False)
+        suvvy = Suvvy(config.suvvy_api_key)
 
         logger.info("Faking user activity...")
         fake_type_task = asyncio.create_task(fake_type())
 
         logger.debug("Sending received message to Suvvy AI...")
-        response = await suvvy.predict(
-            message=SuvvyMessage(text=message.text),
+        new_messages, _ = await suvvy.apredict_history_add_message(
+            message=message.text,
             unique_id=f"suvvyai/telegram-user-bot {message.from_user.id}",
-            raise_if_dialog_stopped=True,
         )
-        logger.success("Suvvy AI answered: {text}", text=response.actual_response.text)
+        logger.success("Suvvy AI answered: {new_messages}", new_messages=new_messages)
 
         if not fake_type_task.done():
             await fake_type_task
 
         logger.success("Replying!")
-        await message.reply(response.actual_response.text)
+        for m in new_messages:
+            await message.reply(m.message_data.content)
     except HistoryStoppedError:
         logger.warning("Suvvy AI refused to answer")
     except Exception as e:
