@@ -12,7 +12,7 @@ tgcrypto = "^1.2.5"
 pydantic = "^2.5.2"
 loguru = "^0.7.2"
 pydantic-settings = "^2.1.0"
-suvvyapi = "2.0a7"
+suvvyapi = "2.0a8"
 python-magic = "^0.4.27"
 
 [tool.poetry.scripts]
