@@ -1,7 +1,9 @@
 import asyncio
+import mimetypes
 from io import BytesIO
 from urllib.parse import quote
 
+import magic
 from loguru import logger
 from pyrogram import Client
 from pyrogram.types import Message
@@ -55,6 +57,7 @@ async def on_message(client: Client, message: Message) -> None:
         if message.audio is not None:
             logger.info("Caught audio message")
             audio_io = await client.download_media(message.audio.file_id, in_memory=True)
+            print(magic.from_buffer(audio_io, mime=True))
             if isinstance(audio_io, BytesIO):
                 messages.append(
                     SuvvyMessage(
