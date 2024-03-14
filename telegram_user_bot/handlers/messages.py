@@ -56,8 +56,9 @@ async def on_message(client: Client, message: Message) -> None:
         messages: list[SuvvyMessage] = []
         if message.voice is not None:
             logger.info("Caught audio message")
-            audio_io = await client.download_media(message.voice.file_id, in_memory=True)
+            audio_io = await client.download_media(message.voice, in_memory=True)
             logger.info(magic.from_buffer(audio_io.read(), mime=True))
+            logger.info(message.voice.mime_type)
             if isinstance(audio_io, BytesIO):
                 messages.append(
                     SuvvyMessage(
