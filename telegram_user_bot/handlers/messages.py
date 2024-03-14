@@ -76,6 +76,8 @@ async def on_message(client: Client, message: Message) -> None:
                 )
             )
 
+        logger.info(messages)
+
         suvvy = Suvvy(config.suvvy_api_key)
 
         logger.info("Faking user activity...")
