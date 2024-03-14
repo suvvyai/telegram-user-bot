@@ -12,7 +12,7 @@ tgcrypto = "^1.2.5"
 pydantic = "^2.5.2"
 loguru = "^0.7.2"
 pydantic-settings = "^2.1.0"
-suvvyapi = "2.0a5"
+suvvyapi = "2.0a6"
 
 [tool.poetry.scripts]
 suvvyuser = "telegram_user_bot.__main__:main"

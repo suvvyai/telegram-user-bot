@@ -1,4 +1,5 @@
 import asyncio
+from io import BytesIO
 from urllib.parse import quote
 
 from loguru import logger
@@ -7,7 +8,10 @@ from pyrogram.types import Message
 from suvvyapi import Message as SuvvyMessage
 from suvvyapi import Suvvy
 from suvvyapi.exceptions.api import HistoryStoppedError
-from suvvyapi.models.enums import ContentType
+from suvvyapi.models.enums import ContentType, SenderRole
+from suvvyapi.models.files import Base64File
+from suvvyapi.models.messages.content.audio import AudioContent, AudioMessageData
+from suvvyapi.models.messages.content.text import TextMessageData
 
 from telegram_user_bot.config import config
 from telegram_user_bot.utils.status import keep_typing
@@ -19,7 +23,6 @@ async def on_message(client: Client, message: Message) -> None:
         user=f"{message.from_user.first_name}"
         f"{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
     )
-    logger.info("Message received: {text}", text=message.text)
 
     async def fake_type() -> None:
         logger.info(
@@ -48,6 +51,28 @@ async def on_message(client: Client, message: Message) -> None:
     typing_event = asyncio.Event()
 
     try:
+        messages: list[SuvvyMessage] = []
+        if message.audio is not None:
+            logger.info("Caught audio message")
+            audio_io = await client.download_media(message.audio.file_id, in_memory=True)
+            if isinstance(audio_io, BytesIO):
+                messages.append(
+                    SuvvyMessage(
+                        message_sender=SenderRole.CUSTOMER,
+                        message_data=AudioMessageData(
+                            content=AudioContent(base64_file=Base64File.from_bytes(audio_io.read()))
+                        ),
+                    )
+                )
+        if message.text or message.caption:
+            logger.info("Caught text message: {text}", text=message.text or message.caption)
+            messages.append(
+                SuvvyMessage(
+                    message_sender=SenderRole.CUSTOMER,
+                    message_data=TextMessageData(content=message.text or message.caption),
+                )
+            )
+
         suvvy = Suvvy(config.suvvy_api_key)
 
         logger.info("Faking user activity...")
@@ -55,7 +80,7 @@ async def on_message(client: Client, message: Message) -> None:
 
         logger.debug("Sending received message to Suvvy AI...")
         new_messages, _ = await suvvy.apredict_history_add_message(
-            message=message.text,
+            message=messages,
             unique_id=f"suvvyai-telegram-user-bot {message.from_user.id}",
         )
         logger.success("Suvvy AI answered: {new_messages}", new_messages=new_messages)
