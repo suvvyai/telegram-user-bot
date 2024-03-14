@@ -97,5 +97,6 @@ async def on_message(client: Client, message: Message) -> None:
         logger.warning("Suvvy AI refused to answer")
     except Exception as e:
         logger.error("Suvvy AI raised an error: {e}", e=e)
+        logger.exception(e)
     finally:
         typing_event.set()
