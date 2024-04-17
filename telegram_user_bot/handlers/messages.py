@@ -26,6 +26,14 @@ async def on_message(client: Client, message: Message) -> None:
         f"{f' {message.from_user.last_name}' if message.from_user.last_name is not None else ''}",
     )
 
+    if message.from_user.is_bot:
+        logger.info("Message is from bot. Skipping")
+        return
+
+    if message.from_user.is_self:
+        logger.info("Message is from self. Skipping")
+        return
+
     async def fake_type() -> None:
         logger.info(
             "Waiting for {before_read} seconds before reading",
